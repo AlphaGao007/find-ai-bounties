@@ -16,6 +16,7 @@ Guidance:
 - `当前状态`: use `可报名`, `今日截止`, `长期开放`, or `待人工确认`. Avoid `已截止` in the task calendar.
 - `报名截止时间`: signup deadline only.
 - `提交截止时间`: deliverable/submission deadline. Can differ from signup deadline.
+- `报名开始时间`, `报名截止时间`, `提交截止时间`: must be treated as date/datetime fields in delivered artifacts. Use exact values like `2026-06-20 23:59` in CSV, true Excel date/datetime cells in XLSX, and Feishu Bitable `DateTime` fields (`type=5`, `date_formatter="yyyy-MM-dd HH:mm"`) when importing/creating Bitable tables.
 - `评审/决赛时间`: non-actionable schedule notes.
 - `可信度`: `官方明确`, `官方但日期不全`, `长期入口`, or `待人工确认`.
 - `风险/注意事项`: include authorization, eligibility, login, copyright, data-use, or deadline caveats.
@@ -71,3 +72,19 @@ When possible, deliver:
 - `来源监控_v{n}.csv`
 - `补全记录_v{n}.csv`
 - Optional rendered previews for visual QA.
+
+## Date Field Delivery Requirements
+
+The task calendar has three operational date fields:
+
+```text
+报名开始时间,报名截止时间,提交截止时间
+```
+
+Delivery rules:
+
+- **CSV**: keep the human-readable canonical format `YYYY-MM-DD HH:mm` (or blank when unknown). CSV has no native date type, so this is the transfer format.
+- **XLSX**: these three columns must be actual spreadsheet date/datetime cells, not text cells. Recommended display format: `yyyy-mm-dd hh:mm`.
+- **Feishu Bitable**: these three columns must be DateTime fields: `type=5`, `ui_type=DateTime`, with `property.date_formatter="yyyy-MM-dd HH:mm"` and `auto_fill=false`.
+- If using all-text fields for initial low-risk import, immediately convert these three fields to DateTime before final delivery, and re-check that sorting/filtering by date works.
+- Include date-format verification in the final summary.

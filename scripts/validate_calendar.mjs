@@ -18,6 +18,8 @@ const requiredTaskHeaders = [
   "风险/注意事项",
 ];
 
+const operationalDateHeaders = ["报名开始时间", "报名截止时间", "提交截止时间"];
+
 function usage() {
   console.error("Usage: validate_calendar.mjs <任务日历.csv> [--as-of YYYY-MM-DD]");
   process.exit(2);
@@ -105,6 +107,11 @@ for (const item of objects) {
 }
 
 const badStatuses = objects.filter((item) => /已截止|复盘参考|近30天结束/.test(item["当前状态"] || ""));
+const badDateFormatRows = objects.flatMap((item) =>
+  operationalDateHeaders
+    .filter((header) => item[header] && !parseDate(item[header]))
+    .map((header) => ({ id: item["任务ID"], field: header, value: item[header] })),
+);
 const expiredRows = objects.filter((item) => {
   if (/长期开放/.test(item["当前状态"] || "")) return false;
   const deadline = parseDate(item["报名截止时间"] || item["提交截止时间"]);
@@ -134,6 +141,7 @@ const result = {
   duplicateIds,
   missingIds: missingIds.map((item) => item["任务ID"] || item["任务名称"] || "(blank)"),
   badStatusRows: badStatuses.map((item) => item["任务ID"]),
+  badDateFormatRows,
   expiredRows: expiredRows.map((item) => ({
     id: item["任务ID"],
     name: item["任务名称"],
@@ -145,6 +153,6 @@ const result = {
 
 console.log(JSON.stringify(result, null, 2));
 
-if (missingHeaders.length || duplicateIds.length || missingIds.length || badStatuses.length || expiredRows.length) {
+if (missingHeaders.length || duplicateIds.length || missingIds.length || badStatuses.length || badDateFormatRows.length || expiredRows.length) {
   process.exit(1);
 }

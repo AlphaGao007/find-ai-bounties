@@ -33,6 +33,7 @@ Exclude tasks whose signup/submission deadline is before the as-of date, even if
    - Load `references/feishu-bitable-schema.md` for the 4-table schema.
    - Keep each row self-contained. Avoid merged cells, nested JSON, or multi-row notes.
    - Use concrete dates like `2026-06-20 23:59`; do not write vague relative dates without an exact date.
+   - Treat `报名开始时间`, `报名截止时间`, and `提交截止时间` as real date/datetime fields, not plain text, when exporting to XLSX or importing to Feishu Bitable.
 
 4. Deduplicate carefully.
    - Use official IDs when available: DataFountain competition ID, Tianchi raceId, CNVD project id, Tencent contest id.
@@ -49,7 +50,8 @@ Exclude tasks whose signup/submission deadline is before the as-of date, even if
 6. Verify before delivery.
    - Run `scripts/validate_calendar.mjs <任务日历.csv> --as-of YYYY-MM-DD`.
    - Confirm no expired dated rows, no duplicate `任务ID`, no missing required headers, and no `已截止/复盘参考` task rows.
-   - If exporting XLSX, inspect or render the workbook enough to confirm all 4 sheets exist and table headers are visible.
+   - If exporting XLSX, inspect or render the workbook enough to confirm all 4 sheets exist and table headers are visible, and confirm the three deadline columns are true Excel date/datetime cells.
+   - If creating Feishu Bitable directly, create/update the three deadline columns as DateTime fields (`type=5`, `date_formatter="yyyy-MM-dd HH:mm"`) before delivery.
 
 ## Output Contract
 
@@ -66,6 +68,7 @@ For each refresh, summarize:
 - Counts by major source, especially DataFountain, Tianchi, CNVD, Tencent/Huawei/Alibaba/ByteDance.
 - Expired-row check result.
 - Important exclusions, especially pages that still show open status despite expired dates.
+- Date-format verification: confirm whether XLSX and/or Feishu Bitable date columns are real date/datetime fields.
 
 ## Source And Schema References
 
