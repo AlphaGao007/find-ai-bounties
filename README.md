@@ -1,4 +1,4 @@
-# Find CN AI Bounties
+# Find AI Bounties
 
 一个可复用的 agent skill，用来查找、核验、整理国内与国际 AI 赏金/奖励任务，并输出适合导入飞书多维表格的任务日历。
 
@@ -17,7 +17,7 @@
 当你想让 agent 做这些事情时，可以使用这个 skill：
 
 ```text
-Use $find-cn-ai-bounties to build a current Feishu Bitable-ready calendar of domestic and international AI bounty and reward tasks.
+Use $find-ai-bounties to build a current Feishu Bitable-ready calendar of domestic and international AI bounty and reward tasks.
 ```
 
 也适合这些需求：
@@ -35,14 +35,14 @@ Use $find-cn-ai-bounties to build a current Feishu Bitable-ready calendar of dom
 给 agent 的安装提示词：
 
 ```text
-请安装这个 skill：https://github.com/AlphaGao007/find-cn-ai-bounties 。把仓库克隆到你当前运行环境的 skills 目录或等价的 agent skill/plugin 目录，确认能读取 SKILL.md 后，在需要查找、核验、更新国内与国际 AI 赏金奖励任务日历时使用 $find-cn-ai-bounties。
+请安装这个 skill：https://github.com/AlphaGao007/find-ai-bounties 。把仓库克隆到你当前运行环境的 skills 目录或等价的 agent skill/plugin 目录，确认能读取 SKILL.md 后，在需要查找、核验、更新国内与国际 AI 赏金奖励任务日历时使用 $find-ai-bounties。
 ```
 
 如果你的 agent 使用本地 skills 目录，可以这样放置：
 
 ```bash
 cd ~/.agents/skills
-git clone https://github.com/AlphaGao007/find-cn-ai-bounties.git
+git clone https://github.com/AlphaGao007/find-ai-bounties.git
 ```
 
 这是公开仓库；agent 所在环境可以直接克隆。若你使用的是私有 fork 或镜像，再配置对应的 GitHub 登录或访问令牌。
@@ -50,14 +50,14 @@ git clone https://github.com/AlphaGao007/find-cn-ai-bounties.git
 如果已经存在同名目录，可以进入目录后更新：
 
 ```bash
-cd ~/.agents/skills/find-cn-ai-bounties
+cd ~/.agents/skills/find-ai-bounties
 git pull
 ```
 
 ## 目录结构
 
 ```text
-find-cn-ai-bounties/
+find-ai-bounties/
 ├── SKILL.md
 ├── agents/
 │   └── openai.yaml

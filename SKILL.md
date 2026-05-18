@@ -1,9 +1,9 @@
 ---
-name: find-cn-ai-bounties
+name: find-ai-bounties
 description: Find, verify, normalize, and package current domestic and international AI bounty, reward, hackathon, algorithm competition, AI security crowdsourcing, SRC bug bounty, and open-source reward tasks. Use when Codex is asked to discover latest AI-related bounty/reward opportunities, maintain a Feishu Bitable/Airtable-style calendar, refresh expired opportunities, distinguish domestic vs international tasks, compare sources such as DataFountain/Tianchi/CNVD/Tencent/Huawei/Alibaba/ByteDance/ML Contests/CompeteHub/BBRadar/Huntr, or produce CSV/XLSX tables for other agents to consume.
 ---
 
-# Find CN AI Bounties
+# Find AI Bounties
 
 ## Operating Rule
 
