@@ -6,6 +6,7 @@ const requiredTaskHeaders = [
   "任务名称",
   "主办方/平台",
   "来源大类",
+  "地域范围",
   "类型",
   "方向标签",
   "当前状态",
@@ -19,6 +20,7 @@ const requiredTaskHeaders = [
 ];
 
 const operationalDateHeaders = ["报名开始时间", "报名截止时间", "提交截止时间"];
+const allowedGeoScopes = new Set(["国内", "国际", "待确认"]);
 
 function usage() {
   console.error("Usage: validate_calendar.mjs <任务日历.csv> [--as-of YYYY-MM-DD]");
@@ -107,6 +109,9 @@ for (const item of objects) {
 }
 
 const badStatuses = objects.filter((item) => /已截止|复盘参考|近30天结束/.test(item["当前状态"] || ""));
+const badGeoScopeRows = objects
+  .filter((item) => !allowedGeoScopes.has(item["地域范围"] || ""))
+  .map((item) => ({ id: item["任务ID"], geoScope: item["地域范围"] || "" }));
 const badDateFormatRows = objects.flatMap((item) =>
   operationalDateHeaders
     .filter((header) => item[header] && !parseDate(item[header]))
@@ -141,6 +146,7 @@ const result = {
   duplicateIds,
   missingIds: missingIds.map((item) => item["任务ID"] || item["任务名称"] || "(blank)"),
   badStatusRows: badStatuses.map((item) => item["任务ID"]),
+  badGeoScopeRows,
   badDateFormatRows,
   expiredRows: expiredRows.map((item) => ({
     id: item["任务ID"],
@@ -149,10 +155,15 @@ const result = {
     submissionDeadline: item["提交截止时间"],
   })),
   counts: summary,
+  geoScopeCounts: objects.reduce((acc, item) => {
+    const scope = item["地域范围"] || "(blank)";
+    acc[scope] = (acc[scope] || 0) + 1;
+    return acc;
+  }, {}),
 };
 
 console.log(JSON.stringify(result, null, 2));
 
-if (missingHeaders.length || duplicateIds.length || missingIds.length || badStatuses.length || badDateFormatRows.length || expiredRows.length) {
+if (missingHeaders.length || duplicateIds.length || missingIds.length || badStatuses.length || badGeoScopeRows.length || badDateFormatRows.length || expiredRows.length) {
   process.exit(1);
 }

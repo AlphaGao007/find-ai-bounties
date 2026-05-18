@@ -4,6 +4,43 @@ Treat this file as a seed list, not ground truth. Always re-check current status
 
 ## High-Priority Current-Task Sources
 
+### Source-of-sources and international aggregators
+
+Use these as discovery feeds, not final authority. For every task discovered from an aggregator, open the underlying official contest/bounty page before adding it to `任务日历`.
+
+- AI赛事通 / CompeteHub: `https://www.competehub.dev/zh` and `https://www.competehub.dev/zh/competitions`
+  - Scope: AI competitions, including AI大模型赛, 数据算法赛, Agent challenges, engineering contests, hackathons.
+  - `地域范围`: `国际`.
+- ML Contests: `https://mlcontests.com/` and `https://mlcontests.github.io/`
+  - Scope: public machine learning/data science/AI contests across Kaggle, DrivenData, AIcrowd, Zindi, Codabench, Tianchi, and similar platforms.
+  - `地域范围`: `国际`.
+- AIContestHub: `https://www.aicontesthub.com/`
+  - Scope: AI-first prize challenges and community AI contests.
+  - `地域范围`: `国际`.
+- Challenge Hunt: `https://challengehunt.github.io/`
+  - Scope: active/upcoming coding contests, hackathons, hiring challenges, and data science challenges.
+  - `地域范围`: `国际`.
+- VoidScraper: `https://vipeo.tech/scraper/`
+  - Scope: hackathons from Devpost, Kaggle, MLH, Reddit, and Devfolio.
+  - `地域范围`: `国际`.
+- BBRadar: `https://www.bbradar.io/`
+  - Scope: public bug bounty programs across major platforms; supports `ai/ml` tags.
+  - `地域范围`: `国际`.
+- Bounty Navigator: `https://bountynavigator.com/`
+  - Scope: directory for hidden/off-platform bug bounty programs.
+  - `地域范围`: `国际`.
+- Huntr: `https://huntr.com/bounties`
+  - Scope: AI/ML supply-chain and open-source vulnerability bounties.
+  - `地域范围`: `国际`.
+
+Aggregator handling rules:
+
+- Add these sites to `来源监控` even if no individual tasks are pulled from them in the current refresh.
+- Mark source rows as `来源类型=聚合/线索源` or `安全赏金聚合`.
+- If a task is found through an aggregator, set `信息来源` to include both the aggregator and the official page.
+- If the official page contradicts the aggregator deadline/status, trust the official page.
+- If only aggregator data is available, mark the task `待人工确认`, not `官方明确`.
+
 ### DataFountain
 
 - Entry: `https://www.datafountain.cn/competitions`
@@ -76,6 +113,12 @@ For standing bounty programs, record the official rules link, eligible product s
 - 科大讯飞 AI开发者大赛: `https://challenge.xfyun.cn/competition`
 - ModelScope events/challenges: `https://modelscope.cn/events`
 - 扣子/Coze and 火山引擎 developer events: monitor official community/activity pages.
+- Kaggle competitions: `https://www.kaggle.com/competitions`
+- DrivenData competitions: `https://www.drivendata.org/competitions/`
+- AIcrowd challenges: `https://www.aicrowd.com/challenges`
+- Zindi competitions: `https://zindi.africa/competitions`
+- Codabench competitions: `https://www.codabench.org/competitions/`
+- Devpost hackathons: `https://devpost.com/hackathons`
 
 ## Search Queries
 

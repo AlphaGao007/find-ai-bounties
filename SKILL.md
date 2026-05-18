@@ -1,6 +1,6 @@
 ---
 name: find-cn-ai-bounties
-description: Find, verify, normalize, and package current China/domestic AI bounty, reward, hackathon, algorithm competition, AI security crowdsourcing, SRC bug bounty, and open-source reward tasks. Use when Codex is asked to discover latest domestic AI-related bounty/reward opportunities, maintain a Feishu Bitable/Airtable-style calendar, refresh expired opportunities, compare sources such as DataFountain/Tianchi/CNVD/Tencent/Huawei/Alibaba/ByteDance, or produce CSV/XLSX tables for other agents to consume.
+description: Find, verify, normalize, and package current domestic and international AI bounty, reward, hackathon, algorithm competition, AI security crowdsourcing, SRC bug bounty, and open-source reward tasks. Use when Codex is asked to discover latest AI-related bounty/reward opportunities, maintain a Feishu Bitable/Airtable-style calendar, refresh expired opportunities, distinguish domestic vs international tasks, compare sources such as DataFountain/Tianchi/CNVD/Tencent/Huawei/Alibaba/ByteDance/ML Contests/CompeteHub/BBRadar/Huntr, or produce CSV/XLSX tables for other agents to consume.
 ---
 
 # Find CN AI Bounties
@@ -20,9 +20,10 @@ Exclude tasks whose signup/submission deadline is before the as-of date, even if
 ## Workflow
 
 1. Define scope and date.
-   - Default scope: mainland China/domestic sources, all AI-related bounty/reward categories.
+   - Default scope: domestic sources plus international official platforms and source-of-sources, all AI-related bounty/reward categories.
    - Default categories: algorithm competitions, AI application/hackathon tasks, AI security crowdsourcing, SRC/bug bounty, open-source issue rewards, developer challenges.
    - Record the as-of date/time in every table.
+   - Add `地域范围` to task and source tables. Use only `国内`, `国际`, or `待确认`. Treat globally open or overseas aggregator opportunities as `国际`.
 
 2. Sweep sources from official pages first.
    - Load `references/source-registry.md` for seed URLs, known APIs, and source-specific traps.
@@ -34,6 +35,7 @@ Exclude tasks whose signup/submission deadline is before the as-of date, even if
    - Keep each row self-contained. Avoid merged cells, nested JSON, or multi-row notes.
    - Use concrete dates like `2026-06-20 23:59`; do not write vague relative dates without an exact date.
    - Treat `报名开始时间`, `报名截止时间`, and `提交截止时间` as real date/datetime fields, not plain text, when exporting to XLSX or importing to Feishu Bitable.
+   - For aggregator/source-of-sources rows, do not create task rows until the underlying official opportunity is verified. Keep the aggregator in `来源监控` and cite it as a discovery source.
 
 4. Deduplicate carefully.
    - Use official IDs when available: DataFountain competition ID, Tianchi raceId, CNVD project id, Tencent contest id.
@@ -50,6 +52,7 @@ Exclude tasks whose signup/submission deadline is before the as-of date, even if
 6. Verify before delivery.
    - Run `scripts/validate_calendar.mjs <任务日历.csv> --as-of YYYY-MM-DD`.
    - Confirm no expired dated rows, no duplicate `任务ID`, no missing required headers, and no `已截止/复盘参考` task rows.
+   - Confirm every task row has a valid `地域范围` value.
    - If exporting XLSX, inspect or render the workbook enough to confirm all 4 sheets exist and table headers are visible, and confirm the three deadline columns are true Excel date/datetime cells.
    - If creating Feishu Bitable directly, create/update the three deadline columns as DateTime fields (`type=5`, `date_formatter="yyyy-MM-dd HH:mm"`) before delivery.
 
@@ -66,6 +69,7 @@ For each refresh, summarize:
 
 - Total task rows and source rows.
 - Counts by major source, especially DataFountain, Tianchi, CNVD, Tencent/Huawei/Alibaba/ByteDance.
+- Counts by `地域范围`: `国内`, `国际`, and `待确认`.
 - Expired-row check result.
 - Important exclusions, especially pages that still show open status despite expired dates.
 - Date-format verification: confirm whether XLSX and/or Feishu Bitable date columns are real date/datetime fields.

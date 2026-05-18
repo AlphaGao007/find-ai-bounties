@@ -7,12 +7,13 @@ Use four flat tables. Keep headers stable so users can import/update Feishu Bita
 Headers:
 
 ```text
-任务ID,任务名称,主办方/平台,来源大类,类型,方向标签,当前状态,行动优先级,报名开始时间,报名截止时间,提交截止时间,评审/决赛时间,奖金/奖池,单项最高奖励,适合AI辅助程度,推荐参与方式,参与门槛,官方链接,公告/规则链接,信息来源,最近核验时间,可信度,风险/注意事项,备注
+任务ID,任务名称,主办方/平台,来源大类,地域范围,类型,方向标签,当前状态,行动优先级,报名开始时间,报名截止时间,提交截止时间,评审/决赛时间,奖金/奖池,单项最高奖励,适合AI辅助程度,推荐参与方式,参与门槛,官方链接,公告/规则链接,信息来源,最近核验时间,可信度,风险/注意事项,备注
 ```
 
 Guidance:
 
 - `任务ID`: stable ID. Prefer official IDs, e.g. `DF-1165`, `TIANCHI-532467`, `CNVD-801`, `TCH-41`.
+- `地域范围`: use `国内`, `国际`, or `待确认`. `国际` includes overseas sources, globally open opportunities, and international aggregators.
 - `当前状态`: use `可报名`, `今日截止`, `长期开放`, or `待人工确认`. Avoid `已截止` in the task calendar.
 - `报名截止时间`: signup deadline only.
 - `提交截止时间`: deliverable/submission deadline. Can differ from signup deadline.
@@ -26,7 +27,7 @@ Guidance:
 Headers:
 
 ```text
-来源ID,来源名称,所属主体,来源类型,覆盖类型,官网/入口,监控页,检查频率,是否需要登录,是否有RSS/API,最近检查时间,推荐抓取方式,可信度,备注
+来源ID,来源名称,所属主体,来源类型,覆盖类型,地域范围,官网/入口,监控页,检查频率,是否需要登录,是否有RSS/API,最近检查时间,推荐抓取方式,可信度,备注
 ```
 
 Use one row per platform/source, not one row per task. Include sources with zero current tasks if they are strategically important and need future monitoring.
@@ -57,6 +58,8 @@ Create or suggest these views after import:
 
 - `可报名任务`: `当前状态` is `可报名` or `今日截止`.
 - `7天内截止`: `报名截止时间` or `提交截止时间` within 7 days.
+- `国内任务`: `地域范围` is `国内`.
+- `国际任务`: `地域范围` is `国际`.
 - `AI安全赏金`: `来源大类` contains `安全赏金` or `类型` contains `安全`.
 - `算法竞赛`: `来源大类` contains `算法竞赛`.
 - `AI应用/黑客松`: `类型` contains `应用` or `黑客松` or `Agent`.

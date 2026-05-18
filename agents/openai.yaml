@@ -1,4 +1,4 @@
 interface:
-  display_name: "Find CN AI Bounties"
-  short_description: "Find current China AI bounty and reward tasks"
-  default_prompt: "Use $find-cn-ai-bounties to build a current Feishu Bitable-ready calendar of domestic AI bounty and reward tasks."
+  display_name: "Find AI Bounties"
+  short_description: "Find current domestic and international AI bounty tasks"
+  default_prompt: "Use $find-cn-ai-bounties to build a current Feishu Bitable-ready calendar of domestic and international AI bounty and reward tasks."
